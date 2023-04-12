@@ -1,13 +1,25 @@
 package br.com.poo.pessoas;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
-public class Diretor extends Funcionarios 
+public class Diretor extends Caixa 
 {
-	protected static int numDiretor = 0;
-	
-	public void cadastroDiretor()
-	{	
-		
+	private double salarioDiretor;
+
+	public double getSalario() 
+	{
+		return salarioDiretor;
 	}
+
+	public void aumentoCaixa(Caixa nomeCaixa, double aumento)
+	{
+//		double porcentagem = aumento
+		
+		double aumentarCaixa = (salarioCaixa * aumento);
+						
+		this.salarioCaixa += aumentarCaixa;							
+	}
+	
+	 
 }
