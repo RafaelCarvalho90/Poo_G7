@@ -3,46 +3,41 @@ package br.com.poo.interfac;
 import javax.swing.JPanel;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.Closeable;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;
-import javax.management.remote.SubjectDelegationPermission;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-
 import br.com.poo.conexao.Conexao;
 import br.com.poo.contas.Conta;
 import br.com.poo.pessoas.*;
 import br.com.poo.sistema.SistemaInterno;
 
 public class Interface extends JFrame {
-	private Image fundo;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public Interface() {
 
 	}
 
-	public void MenuLogin() {
-		this.setVisible(false);
+	public static void MenuLogin() {
+		// this.setVisible(false);
 		int i = 0;
 		while (i < 3) {
-			String usuario = JOptionPane.showInputDialog(null, "Usuário:","Usuario",JOptionPane.DEFAULT_OPTION);
-			String senha = JOptionPane.showInputDialog(null, "Senha:","Senha",JOptionPane.DEFAULT_OPTION);
+
+			String usuario = JOptionPane.showInputDialog(null, "Usuário:", "Usuario", JOptionPane.DEFAULT_OPTION);
+			String senha = JOptionPane.showInputDialog(null, "Senha:", "Senha", JOptionPane.DEFAULT_OPTION);
 			String cpfsenha = usuario + senha;
 			Conexao con = new Conexao();
 			String sql = "select * from funcionario f where cpfsenha=" + "'" + cpfsenha + "'" + ";";
 			ResultSet rs = con.executaBusca(sql);
-			System.out.println(rs);
 			try {
 				while (rs.next()) {
 
@@ -52,23 +47,23 @@ public class Interface extends JFrame {
 					if (cpfsenha.equals(conf)) {
 						JOptionPane.showMessageDialog(null, "              Bem-vindo!\n                   " + nome);
 						if (cargo.equalsIgnoreCase("caixa")) {
-							MenuCaixa();
+							MenuCaixa(cpfsenha);
 							break;
 						}
 						if (cargo.equalsIgnoreCase("Diretor")) {
+							// MenuDiretor();
+							break;
+						}
+						if (cargo.equals("Presidente")) {
 							MenuDiretor();
 							break;
 						}
-//						if (cargo.equals("Presidente")) {
-//							MenuDiretor();
-//							break;
-//						}
 						if (cargo.equalsIgnoreCase("Gerente")) {
-							MenuGerente();
+							MenuGerente(cpfsenha);
 							break;
 						}
 						if (cargo.equalsIgnoreCase("Cliente")) {
-							MenuCliente();
+							MenuCliente(nome);
 							break;
 						}
 
@@ -80,6 +75,7 @@ public class Interface extends JFrame {
 					} else {
 						JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos!");
 						i++;
+						break;
 					}
 				}
 				break;
@@ -90,7 +86,9 @@ public class Interface extends JFrame {
 		}
 		int x = 5;
 		while (x > 0) {
-			JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos!\n Clique em ok para continuar\n Tente Novamente em: "+x,"Error",JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null,
+					"Usuario ou senha incorretos!\n Clique em ok para continuar\n Tente Novamente em: " + x, "Error",
+					JOptionPane.WARNING_MESSAGE);
 
 			System.out.println(x);
 			x--;
@@ -98,32 +96,35 @@ public class Interface extends JFrame {
 		MenuLogin();
 
 	}
-
-	public void EncontrarPessoa() {
-
-	}
+//	public String Logado (String nome,String cpf) {
+//		MenuLogin
+//		this.nome=nome;
+//		return nome;
+//
+//		
+//	}
 
 	public void Principal() {
 		JButton botao = new JButton("Acessar sua Conta");
 		JButton botao1 = new JButton("Ajuda");
-		this.setSize(400, 100);
+		this.setSize(280, 75);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		this.setTitle("Piramide Tec");
-		// painel.set
+		this.setTitle("Bank.jar");
+		this.setResizable(false);
 		JPanel p = new JPanel();
 		botao.setBounds(10, 100, 100, 30);
-		//p.setBackground(Color.BLACK);
 		add(p);
-		//p.setOpaque(false);
+		p.setOpaque(true);
+		// botao.setForeground(Color.TRANSLUCENT);
 		p.add(botao);
 		p.add(botao1);
 		botao.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				botao.setVisible(false);
 				botao1.setVisible(false);
 				MenuLogin();
@@ -181,11 +182,13 @@ public class Interface extends JFrame {
 		});
 	}
 
-	public static void MenuCliente() {
+	public static void MenuCliente(String nome) {
 
-		int operacao = Integer.parseInt(JOptionPane.showInputDialog("------Selecione uma operação------\n"
-				+ "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n"
-				+ "| Opção 5 -Extratos\n" + "| Digite 0 para sair"));
+		int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,
+				"------Selecione uma operação------\n" + "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n"
+						+ "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n" + "| Opção 5 -Extratos\n"
+						+ "| Digite 0 para sair",
+				"Menu Cliente", JOptionPane.INFORMATION_MESSAGE));
 		Conta novaconta = new Conta();
 		novaconta.depositarDinheiro(1000);
 
@@ -198,12 +201,12 @@ public class Interface extends JFrame {
 			novaconta.sacar(saque);
 			JOptionPane.showMessageDialog(null, "Seu novo saldo é: " + novaconta.getSaldo());
 			// System.out.println(novaconta.getSaldo());
-			MenuCliente();
+			MenuCliente(valor);
 			// break;
 		case 2:
 			// novaconta.getSaldo();
 			// JOptionPane.showMessageDialog(null );
-			MenuCliente();
+			// MenuCliente(valor);
 			break;
 
 		case 0:
@@ -213,44 +216,73 @@ public class Interface extends JFrame {
 
 	}
 
-	public void MenuGerente() {
-		int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,"------Selecione uma operação------\n"
-				+ "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n"
-				+ "| Opção 5 -Extratos\n" + "| Opção 6 -Cadastrar Cliente\n" + "| Opção 7 -Gerar Relatório Caixa\n"
-				+ "| Digite 0 para sair","Menu Gerente",JOptionPane.INFORMATION_MESSAGE));
-		switch (operacao) {
-		case 1:
-//			 	JOptionPane.showMessageDialog(null,"Seu saldo atual é: "+novaconta.getSaldo());
-//			 	String valor = JOptionPane.showInputDialog("Qual valor gostaria de sacar?");
-//		 		double saque = Double.parseDouble(valor);
-//		 		//System.out.println(novaconta.getSaldo()); 
-//		 		novaconta.sacar(saque);
-//		 		JOptionPane.showMessageDialog(null,"Seu novo saldo é: "+novaconta.getSaldo()); 
-//		 		//System.out.println(novaconta.getSaldo());
-			MenuCliente();
-			// break;
-		case 2:
-			// novaconta.getSaldo();
-			// JOptionPane.showMessageDialog(null );
-			MenuCliente();
-			break;
-		case 6:
-			Gerente ger = new Gerente("Teste", "sobrenome", "141545", "rafa", "7845415", 5000);
-			ger.cadastroCliente();
+	public static void MenuGerente(String cpfsenha) {
+		GregorianCalendar gre = new GregorianCalendar();
+		Conexao con = new Conexao();
+		String sql = "select * from funcionario f where cpfsenha=" + "'" + cpfsenha + "'" + ";";
+		ResultSet rs = con.executaBusca(sql);
+		try {
+			while (rs.next()) {
 
-		case 0:
-			JOptionPane.showMessageDialog(null, "Obrigado por usar nossa agencia");
-			System.exit(0);
+				String salario = rs.getString("salario");
+				String nome = rs.getString("nome");
+				String saldo =rs.getString("saldo");
+		
+				
+
+				int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,
+						nome + "\n" + gre.getTime() + "\n\n------Selecione uma operação------\n" + "| Opção 1 -Saque\n"
+								+ "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n"
+								+ "| Opção 5 -Extratos\n" + "| Opção 6 -Cadastrar Cliente\n"
+								+ "| Opção 7 -Gerar Relatório Caixa\n" + "| Digite 0 para sair",
+						"Menu Gerente ", JOptionPane.INFORMATION_MESSAGE));
+				switch (operacao) {
+				case 1:
+
+				case 2:
+					JOptionPane.showInternalMessageDialog(null, "Seu saldo é: " + saldo);
+					MenuGerente(cpfsenha);
+
+					break;
+				case 3:
+//			try {
+//			while (rs.next()) {
+//
+//			String saldo = rs.getString("salario");
+					JOptionPane.showInternalMessageDialog(null, "Seu saldo é: " + saldo);
+//			
+//			
+//			MenuGerente(cpfsenha);
+//			}			    
+//			
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+				case 6:
+
+					// ger.cadastroCliente();
+
+				case 0:
+					JOptionPane.showMessageDialog(null, "Obrigado por usar nossa agencia");
+					System.exit(0);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
 
-	public void MenuDiretor() {
+	public static void MenuDiretor() {
 
-		int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,"------Selecione uma operação------\n"
-				+ "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n"
-				+ "| Opção 5 -Extratos\n" + "| Opção 6 -Cadastrar Funcionário\n" + "| Opção 7 -Consultar Funcionarios\n"
-				+ "| Digite 0 para sair","Menu Diretor",JOptionPane.NO_OPTION));
+		int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,
+				"------Selecione uma operação------\n" + "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n"
+						+ "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n" + "| Opção 5 -Extratos\n"
+						+ "| Opção 6 -Cadastrar Funcionário\n" + "| Opção 7 -Consultar Funcionarios\n"
+						+ "| Digite 0 para sair",
+				"Menu Diretor", JOptionPane.NO_OPTION));
+
 		switch (operacao) {
 		case 1:
 //			 	JOptionPane.showMessageDialog(null,"Seu saldo atual é: "+novaconta.getSaldo());
@@ -260,7 +292,7 @@ public class Interface extends JFrame {
 //		 		novaconta.sacar(saque);
 //		 		JOptionPane.showMessageDialog(null,"Seu novo saldo é: "+novaconta.getSaldo()); 
 //		 		//System.out.println(novaconta.getSaldo());
-			MenuCliente();
+			// MenuCliente();
 			// break;
 		case 6:
 			Diretor dir = new Diretor("Maste", "Robot", "1478874558", "robo@dadaa", "789974258", 5000);
@@ -271,11 +303,23 @@ public class Interface extends JFrame {
 		}
 	}
 
-	public void MenuCaixa() {
-		
-		int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,"------Selecione uma operação------\n"
-				+ "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n"
-				+ "| Opção 5 -Extratos\n" + "| Opção 6 -Consultar Saldo Cliente\n" + "| Digite 0 para sair\n","Menu Caixa",JOptionPane.NO_OPTION));
+	public static void MenuCaixa(String cpfsenha) {
+		GregorianCalendar gre = new GregorianCalendar();
+		Conexao con = new Conexao();
+		String sql = "select * from funcionario f where cpfsenha=" + "'" + cpfsenha + "'" + ";";
+		ResultSet rs = con.executaBusca(sql);
+		try {
+			while (rs.next()) {
+
+				String salario = rs.getString("salario");
+				String nome = rs.getString("nome");
+				String saldo =rs.getString("saldo");
+
+		int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,nome + "\n" + gre.getTime() + 
+				"\n------Selecione uma operação------\n" + "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n"
+						+ "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n" + "| Opção 5 -Extratos\n"
+						+ "| Opção 6 -Consultar Saldo Cliente\n" + "| Digite 0 para sair\n",
+				"Menu Caixa", JOptionPane.OK_CANCEL_OPTION));
 		switch (operacao) {
 		case 1:
 //			 	JOptionPane.showMessageDialog(null,"Seu saldo atual é: "+novaconta.getSaldo());
@@ -285,18 +329,21 @@ public class Interface extends JFrame {
 //		 		novaconta.sacar(saque);
 //		 		JOptionPane.showMessageDialog(null,"Seu novo saldo é: "+novaconta.getSaldo()); 
 //		 		//System.out.println(novaconta.getSaldo());
-			MenuCliente();
+			// MenuCliente();
 			// break;
 		case 6:
 			Diretor dir = new Diretor("Maste", "Robot", "1478874558", "robo@dadaa", "789974258", 5000);
 			dir.CadastroFuncionario();
-			MenuDiretor();
+			// MenuDiretor();
 		case 7:
 			Diretor dir1 = new Diretor("Master", "Robot", "1478874558", "robo@dadaa", "789974258", 5000);
 			dir1.Consulta();
 		case 0:
 			JOptionPane.showMessageDialog(null, "Obrigado por usar nossa agencia");
-			System.exit(0);
+			System.exit(0);}
 		}
-	}
+			}catch (Exception e) {
+			e.printStackTrace();
+		}
+		}
 }

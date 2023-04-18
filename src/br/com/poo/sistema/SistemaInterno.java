@@ -1,4 +1,5 @@
 package br.com.poo.sistema;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
@@ -18,7 +19,7 @@ public class SistemaInterno extends JFrame
 		 
 		
 		add(new Etapa());
-		setTitle("Banco Serratec");
+		setTitle("Bank.jar");
 		setSize(400,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -29,7 +30,6 @@ public class SistemaInterno extends JFrame
 
 	public static void main(String[] args) 
 	{	
-		
 		
 		//Scanner sc = new Scanner(System.in);
 		new SistemaInterno();
