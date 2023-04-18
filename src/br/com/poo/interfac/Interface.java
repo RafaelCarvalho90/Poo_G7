@@ -31,41 +31,52 @@ public class Interface extends JFrame {
 	public Interface() {
 
 	}
-	
+
 	public void MenuLogin() {
+		this.setVisible(false);
 		int i = 0;
 		while (i < 3) {
-			String usuario = JOptionPane.showInputDialog(null, "Usuário:");
-			String senha = JOptionPane.showInputDialog(null, "Senha:");
-			String cpfsenha = usuario+senha;
-			
+			String usuario = JOptionPane.showInputDialog(null, "Usuário:","Usuario",JOptionPane.DEFAULT_OPTION);
+			String senha = JOptionPane.showInputDialog(null, "Senha:","Senha",JOptionPane.DEFAULT_OPTION);
+			String cpfsenha = usuario + senha;
 			Conexao con = new Conexao();
 			String sql = "select * from funcionario f where cpfsenha=" + "'" + cpfsenha + "'" + ";";
-			
 			ResultSet rs = con.executaBusca(sql);
 			System.out.println(rs);
 			try {
 				while (rs.next()) {
-					
+
 					String conf = rs.getString("cpfsenha");
-					String nome= rs.getString("nome");
-					String cargo= rs.getString("cargo");
+					String nome = rs.getString("nome");
+					String cargo = rs.getString("cargo");
 					if (cpfsenha.equals(conf)) {
-						JOptionPane.showMessageDialog(null, "Bem-vindo!\n"+nome);
-							if(cargo.equalsIgnoreCase("caixa")){
-								MenuCaixa();
-								break;
-							}
-							if(cargo.equals("Diretor")) {
-								MenuDiretor();
-								break;
-							}
-					
+						JOptionPane.showMessageDialog(null, "              Bem-vindo!\n                   " + nome);
+						if (cargo.equalsIgnoreCase("caixa")) {
+							MenuCaixa();
+							break;
+						}
+						if (cargo.equalsIgnoreCase("Diretor")) {
+							MenuDiretor();
+							break;
+						}
+//						if (cargo.equals("Presidente")) {
+//							MenuDiretor();
+//							break;
+//						}
+						if (cargo.equalsIgnoreCase("Gerente")) {
+							MenuGerente();
+							break;
+						}
+						if (cargo.equalsIgnoreCase("Cliente")) {
+							MenuCliente();
+							break;
+						}
+
 						else {
 							JOptionPane.showMessageDialog(null, "Cargo invalido");
-							
+
 						}
-		
+
 					} else {
 						JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos!");
 						i++;
@@ -75,14 +86,11 @@ public class Interface extends JFrame {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			
-			
-			
+
 		}
 		int x = 5;
 		while (x > 0) {
-			JOptionPane.showMessageDialog(null, x);
+			JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos!\n Clique em ok para continuar\n Tente Novamente em: "+x,"Error",JOptionPane.WARNING_MESSAGE);
 
 			System.out.println(x);
 			x--;
@@ -94,34 +102,32 @@ public class Interface extends JFrame {
 	public void EncontrarPessoa() {
 
 	}
-	
 
 	public void Principal() {
 		JButton botao = new JButton("Acessar sua Conta");
 		JButton botao1 = new JButton("Ajuda");
-		this.setSize(400,100);
+		this.setSize(400, 100);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setTitle("Piramide Tec");
-		this.setBackground(Color.LIGHT_GRAY);
 		// painel.set
 		JPanel p = new JPanel();
 		botao.setBounds(10, 100, 100, 30);
+		//p.setBackground(Color.BLACK);
 		add(p);
-		p.setBackground(Color.PINK);
-		p.setOpaque(false);
+		//p.setOpaque(false);
 		p.add(botao);
 		p.add(botao1);
 		botao.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				botao.setVisible(false);
 				botao1.setVisible(false);
-				
 				MenuLogin();
-				
+
 				;
 			}
 		});
@@ -176,7 +182,7 @@ public class Interface extends JFrame {
 	}
 
 	public static void MenuCliente() {
-		
+
 		int operacao = Integer.parseInt(JOptionPane.showInputDialog("------Selecione uma operação------\n"
 				+ "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n"
 				+ "| Opção 5 -Extratos\n" + "| Digite 0 para sair"));
@@ -208,10 +214,10 @@ public class Interface extends JFrame {
 	}
 
 	public void MenuGerente() {
-		int operacao = Integer.parseInt(JOptionPane.showInputDialog("------Selecione uma operação------\n"
+		int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,"------Selecione uma operação------\n"
 				+ "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n"
 				+ "| Opção 5 -Extratos\n" + "| Opção 6 -Cadastrar Cliente\n" + "| Opção 7 -Gerar Relatório Caixa\n"
-				+ "| Digite 0 para sair"));
+				+ "| Digite 0 para sair","Menu Gerente",JOptionPane.INFORMATION_MESSAGE));
 		switch (operacao) {
 		case 1:
 //			 	JOptionPane.showMessageDialog(null,"Seu saldo atual é: "+novaconta.getSaldo());
@@ -241,10 +247,10 @@ public class Interface extends JFrame {
 
 	public void MenuDiretor() {
 
-		int operacao = Integer.parseInt(JOptionPane.showInputDialog("------Selecione uma operação------\n"
+		int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,"------Selecione uma operação------\n"
 				+ "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n"
 				+ "| Opção 5 -Extratos\n" + "| Opção 6 -Cadastrar Funcionário\n" + "| Opção 7 -Consultar Funcionarios\n"
-				+ "| Digite 0 para sair"));
+				+ "| Digite 0 para sair","Menu Diretor",JOptionPane.NO_OPTION));
 		switch (operacao) {
 		case 1:
 //			 	JOptionPane.showMessageDialog(null,"Seu saldo atual é: "+novaconta.getSaldo());
@@ -261,13 +267,15 @@ public class Interface extends JFrame {
 			dir.CadastroFuncionario();
 			MenuDiretor();
 		case 7:
-			//dir.Consulta();
+			// dir.Consulta();
 		}
 	}
+
 	public void MenuCaixa() {
-		int operacao = Integer.parseInt(JOptionPane.showInputDialog("------Selecione uma operação------\n"
+		
+		int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,"------Selecione uma operação------\n"
 				+ "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n"
-				+ "| Opção 5 -Extratos\n" + "| Opção 6 -Consultar Saldo Cliente\n" + "| Digite 0 para sair\n"));
+				+ "| Opção 5 -Extratos\n" + "| Opção 6 -Consultar Saldo Cliente\n" + "| Digite 0 para sair\n","Menu Caixa",JOptionPane.NO_OPTION));
 		switch (operacao) {
 		case 1:
 //			 	JOptionPane.showMessageDialog(null,"Seu saldo atual é: "+novaconta.getSaldo());
@@ -286,7 +294,9 @@ public class Interface extends JFrame {
 		case 7:
 			Diretor dir1 = new Diretor("Master", "Robot", "1478874558", "robo@dadaa", "789974258", 5000);
 			dir1.Consulta();
-			break;
+		case 0:
+			JOptionPane.showMessageDialog(null, "Obrigado por usar nossa agencia");
+			System.exit(0);
 		}
 	}
 }

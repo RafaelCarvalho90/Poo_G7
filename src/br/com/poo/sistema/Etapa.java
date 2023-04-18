@@ -14,7 +14,7 @@ public class Etapa extends JPanel{
 	
 	public Etapa() {
 		
-		ImageIcon referencia = new ImageIcon("res\\Background.jpg");
+		ImageIcon referencia = new ImageIcon("res\\background .jpg");
 		fundo = referencia.getImage();
 	}
 	public void paint(Graphics g) {

@@ -35,7 +35,7 @@ public class SistemaInterno extends JFrame
 		new SistemaInterno();
 		Interface lay =new Interface();
 		lay.Principal();
-		Diretor dir = new Diretor("Maste","Robot","1478874558","robo@dadaa","789974258",5000);
+		//Diretor dir = new Diretor("Maste","Robot","1478874558","robo@dadaa","789974258",5000);
 		//dir.CadastroFuncionario();
 		//dir.Consulta();
 		
