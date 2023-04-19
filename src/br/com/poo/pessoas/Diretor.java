@@ -30,36 +30,62 @@ public class Diretor extends Gerente {
 //				opcaoCadastro, opcaoCadastro[0]);
 //		switch (opcaoSelecao.toString().substring(0, 1)) {
 //		case "1":
-			String nome = JOptionPane.showInputDialog("Insira o nome ");
-			String sobrenome = JOptionPane.showInputDialog("Insira o sobrenome");
-			String cpf = JOptionPane.showInputDialog("Insira o CPF");
-			String email = JOptionPane.showInputDialog("Insira o email");
-			String contato = JOptionPane.showInputDialog("Insira telefone para Contato");
-			String salarios = JOptionPane.showInputDialog("Insira o sálario inicial");
-			double salario = Double.parseDouble(salarios);
-			String cargo = JOptionPane.showInputDialog("Qual o cargo?");
-			String senha = JOptionPane.showInputDialog("Crie uma senha");
+		String nome = JOptionPane.showInputDialog("Insira o nome ");
+		String sobrenome = JOptionPane.showInputDialog("Insira o sobrenome");
+		String cpf = JOptionPane.showInputDialog("Insira o CPF");
+		String email = JOptionPane.showInputDialog("Insira o email");
+		String contato = JOptionPane.showInputDialog("Insira telefone para Contato");
+		String salarios = JOptionPane.showInputDialog("Insira o sálario inicial");
+		double salario = Double.parseDouble(salarios);
+		String cargo = JOptionPane.showInputDialog("Qual o cargo?");
+		String senha = JOptionPane.showInputDialog("Crie uma senha");
 //arrumar forma de converter string para double
-			Caixa novocaixa = new Caixa(nome, sobrenome, cpf, cpf, contato, 5000);
-			System.out.println(novocaixa.getNome());
-			String sql = " Insert into funcionario (id, nome , sobrenome, cpf, email, contato,salario,cpfsenha,cargo )" + "values (default,"
-					+ "'" + nome + "'" + ",'" + sobrenome + "'" + ",'" + cpf + "'" + ",'" + email + "','" + contato
-					+ "'" +",'" + salario + "'"+ ",'"+cpf+senha +"'"+",'"+cargo+"'"+")";
-			int res = con.excutaSql(sql);
-			if (res > 0) {
-				JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
+//			Caixa novocaixa = new Caixa(nome, sobrenome, cpf, cpf, contato, 5000);
+//			System.out.println(novocaixa.getNome());
+		String sql = " Insert into funcionario (id, nome , sobrenome, cpf, email, contato,salario,cpfsenha,cargo )"
+				+ "values (default," + "'" + nome + "'" + ",'" + sobrenome + "'" + ",'" + cpf + "'" + ",'" + email
+				+ "','" + contato + "'" + ",'" + salario + "'" + ",'" + cpf + senha + "'" + ",'" + cargo + "'" + ")";
+		int res = con.excutaSql(sql);
+		if (res > 0) {
+			JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
 //preciso fazer um retorno
-			} else {
-				System.out.println("Erro durante o cadastro");
-			}
+		} else {
+			System.out.println("Erro durante o cadastro");
+		}
 
 //		case "2":
 //			JOptionPane.showMessageDialog(null, "Sistema em implementação");
 
+	}
+
+	public void CadastroCliente() {
+		Conexao con = new Conexao();
+		String nome = JOptionPane.showInputDialog("Insira o nome ");
+		String sobrenome = JOptionPane.showInputDialog("Insira o sobrenome");
+		String cpf = JOptionPane.showInputDialog("Insira o CPF");
+		String email = JOptionPane.showInputDialog("Insira o email");
+		String contato = JOptionPane.showInputDialog("Insira telefone para Contato");
+		String cargo = "cliente";
+		String senha = JOptionPane.showInputDialog("Crie uma senha");
+		String saldos = JOptionPane.showInputDialog("Deposite um valor minimo de R$100,00");
+		double saldo = Double.parseDouble(saldos);
+		double salario = 0;
+		
+
+		String sql = " Insert into funcionario (id, nome , sobrenome, cpf, email, contato,salario,cpfsenha,cargo,saldo)"
+				+ "values (default," + "'" + nome + "'" + ",'" + sobrenome + "'" + ",'" + cpf + "'" + ",'" + email
+				+ "','" + contato + "'" + ",'" + salario + "'" + ",'" + cpf + senha + "'" + ",'" + cargo + "'" + ",'"+saldo+"'" + ")";
+		int res = con.excutaSql(sql);
+		if (res > 0) {
+			JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
+//preciso fazer um retorno
+		} else {
+			System.out.println("Erro durante o cadastro");
 		}
-		// System.out.println("Gostaria de criar um
-		// novo\n1)Cliente\t2)Caixa\t3)Diretor\t4)Gerente");
-		// System.out.println("Prencha os dados de sua conta");
+	}
+	// System.out.println("Gostaria de criar um
+	// novo\n1)Cliente\t2)Caixa\t3)Diretor\t4)Gerente");
+	// System.out.println("Prencha os dados de sua conta");
 //		String nome = JOptionPane.showInputDialog("Insira o nome ");
 //		String sobrenome = JOptionPane.showInputDialog("Insira o sobrenome");
 //		String cpf = JOptionPane.showInputDialog("Insira o CPF");
@@ -67,17 +93,16 @@ public class Diretor extends Gerente {
 //		String contato = JOptionPane.showInputDialog("Insira telefone para Contato");
 //		Caixa novocaixa = new Caixa(nome, sobrenome, cpf, cpf, contato, 5000);
 //		System.out.println(novocaixa.getNome());
-
-		// System.out.print("Nome: ");
-		// String nome = scanner.next();
-		// System.out.print("Sobrenome: ");
-		// String sobrenome= scanner.next();
-		// System.out.print("CPF: ");
-		// String cpf= scanner.next();
-		// System.out.print("Email: ");
-		// String email= scanner.next();
-		// System.out.print("Contato: ");
-		// String contato= scanner.next();
+	// System.out.print("Nome: ");
+	// String nome = scanner.next();
+	// System.out.print("Sobrenome: ");
+	// String sobrenome= scanner.next();
+	// System.out.print("CPF: ");
+	// String cpf= scanner.next();
+	// System.out.print("Email: ");
+	// String email= scanner.next();
+	// System.out.print("Contato: ");
+	// String contato= scanner.next();
 
 //		String sql = " Insert into funcionario (id, nome , sobrenome, cpf, email, contato )" + "values (default," + "'"
 //				+ nome + "'" + ",'" + sobrenome + "'" + ",'" + cpf + "'" + ",'" + email + "','" + contato + "'" + ")";
@@ -88,8 +113,7 @@ public class Diretor extends Gerente {
 //		} else {
 //			System.out.println("Erro durante o cadastro");
 //		}
-	
-	
+
 //	List<String> caixas = new ArrayList<String>();
 //
 //    List<String> cpfSenha = new ArrayList<String>();

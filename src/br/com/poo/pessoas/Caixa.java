@@ -6,6 +6,9 @@ public class Caixa extends Pessoa
 		super(nome, sobrenome, cpf, email, contato);
 
 	}
+	public Caixa() {
+		
+	}
 
 
 

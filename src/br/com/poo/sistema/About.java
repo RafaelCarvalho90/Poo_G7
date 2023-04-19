@@ -5,9 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Etapa extends JPanel{
+public class About extends JFrame{
 	
 	/**
 	 * 
@@ -16,9 +17,9 @@ public class Etapa extends JPanel{
 	private Image fundo;
 	
 	
-	public Etapa() {
+	public About() {
 		
-		ImageIcon referencia = new ImageIcon("res\\background.jpg");
+		ImageIcon referencia = new ImageIcon("res\\about.jpg");
 		fundo = referencia.getImage();
 	}
 	

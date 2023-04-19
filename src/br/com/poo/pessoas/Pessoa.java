@@ -24,6 +24,10 @@ public class Pessoa
 		this.contato=contato;
 		
 	}
+	public Pessoa() {
+		
+		
+	}
 	
 	public String getNome() 
 	{				

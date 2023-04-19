@@ -3,7 +3,7 @@ package br.com.poo.pessoas;
 public class Cliente extends Pessoa{
 	
 	
-	public Cliente(String nome, String sobrenome, String cpf, String email, String contato) {
+	public Cliente(String nome, String sobrenome, String cpf, String email, String contato,Double saldo) {
 		super(nome, sobrenome, cpf, email, contato);
 		
 	}

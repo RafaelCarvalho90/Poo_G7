@@ -2,6 +2,10 @@ package br.com.poo.contas;
 
 import java.text.DecimalFormat;
 
+import javax.swing.JOptionPane;
+
+import br.com.poo.conexao.Conexao;
+
 public class Conta 
 {
 	protected String agencia;
@@ -77,7 +81,7 @@ public class Conta
 	}
 	
 	public boolean sacar(double valor)
-	{
+	{ 
 		if(this.saldo < valor || valor <= 0)
 		{
 			return false;
@@ -87,6 +91,7 @@ public class Conta
 			this.saldo -= valor;
 			return true;
 		}
+	
 	}
 	
 	public boolean depositarDinheiro(double valor)
