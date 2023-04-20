@@ -3,6 +3,7 @@ package br.com.poo.pessoas;
 import javax.swing.JOptionPane;
 
 import br.com.poo.conexao.Conexao;
+import br.com.poo.vo.CadastroClienteVO;
 
 public class Gerente extends Caixa
 {
@@ -36,27 +37,77 @@ public class Gerente extends Caixa
 		return salario;
 		
 	}
+	
 	public void cadastroCliente() {
+		Object[] escolha = { "Corrente", "Poupanca" , "Ambos"};
+		Object opcao = JOptionPane.showInputDialog(null, "Conta", "Escolha o tipo de conta:",
+		JOptionPane.INFORMATION_MESSAGE, null, escolha, escolha[2]);
+		String selecao = (String) opcao;
+
+		if(selecao.equalsIgnoreCase("Corrente"))
+		{
+			cadastroClienteC();
+		}
+		if(selecao.equalsIgnoreCase("Poupanca"))
+		{
+			cadastroClienteP();
+		}
+		
+		
+		
+		
+		
+	}
+	public void cadastroClienteC() {
 		Conexao con = new Conexao();
 		Object[] escolha = {"3344","4455","6678","0022"};	
 		Object agencia = JOptionPane.showInputDialog(null,"Escolha","Informe a agencia:",JOptionPane.INFORMATION_MESSAGE,null,escolha, escolha[3]);		
+		System.out.println(agencia);
+		CadastroClienteVO cadastro = new CadastroClienteVO();
 		
-		String nome = JOptionPane.showInputDialog("Insira o nome ");
-		String sobrenome = JOptionPane.showInputDialog("Insira o sobrenome");
-		String cpf = JOptionPane.showInputDialog("Insira o CPF");
-		String email = JOptionPane.showInputDialog("Insira o email");
-		String contato = JOptionPane.showInputDialog("Insira telefone para Contato");
-		String cargo = "Cliente";
-		String senha = JOptionPane.showInputDialog("Crie uma senha");
-		String saldos = JOptionPane.showInputDialog("Deposite um valor minimo de R$100,00");
+		cadastro.setNome(JOptionPane.showInputDialog("Insira o nome "));
+		cadastro.setSobrenome(JOptionPane.showInputDialog("Insira o sobrenome"));
+		cadastro.setCpf(JOptionPane.showInputDialog("Insira o CPF"));
+		cadastro.setEmail(JOptionPane.showInputDialog("Insira o email"));
+		cadastro.setContato(JOptionPane.showInputDialog("Insira telefone para Contato"));
+		cadastro.setCargo("Cliente");
+		cadastro.setSenha(JOptionPane.showInputDialog("Crie uma senha"));
+		cadastro.setSaldos(JOptionPane.showInputDialog("Deposite um valor minimo de R$100,00"));
+		cadastro.setSalarios("0");
+		System.out.println(cadastro.getSaldo());
 		
-		double saldo = Double.parseDouble(saldos);
-		double salario = 0;
-		
-
 		String sql = " Insert into funcionario (id, nome , sobrenome, cpf, email, contato,salario,cpfsenha,cargo,saldo,agencia)"
-				+ "values (default," + "'" + nome + "'" + ",'" + sobrenome + "'" + ",'" + cpf + "'" + ",'" + email
-				+ "','" + contato + "'" + ",'" + salario + "'" + ",'" + cpf + senha + "'" + ",'" + cargo + "'" + ",'"+saldo+"'" + ",'" + agencia +"'" + ")";
+				+ "values (default," + "'" + cadastro.getNome()+ "'" + ",'" + cadastro.getSobrenome()+ "'" + ",'" + cadastro.getCpf()+ "'" + ",'" + cadastro.getEmail()
+				+ "','" + cadastro.getContato() + "'" + ",'" +cadastro.getSalario()+ "'" + ",'" + cadastro.getCpf() + cadastro.getSenha() + "'" + ",'" + cadastro.getCargo() + "'" + ",'"+cadastro.getSaldo()+"'" + ",'" + agencia+"'" + ")";
+		int res = con.excutaSql(sql);
+		if (res > 0) {
+			JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
+//preciso fazer um retorno
+		} else {
+			System.out.println("Erro durante o cadastro");
+		}
+	}
+	public void cadastroClienteP() {
+		Conexao con = new Conexao();
+		Object[] escolha = {"3344","4455","6678","0022"};	
+		Object agencia = JOptionPane.showInputDialog(null,"Escolha","Informe a agencia:",JOptionPane.INFORMATION_MESSAGE,null,escolha, escolha[3]);		
+		System.out.println(agencia);
+		CadastroClienteVO cadastro = new CadastroClienteVO();
+		
+		cadastro.setNome(JOptionPane.showInputDialog("Insira o nome "));
+		cadastro.setSobrenome(JOptionPane.showInputDialog("Insira o sobrenome"));
+		cadastro.setCpf(JOptionPane.showInputDialog("Insira o CPF"));
+		cadastro.setEmail(JOptionPane.showInputDialog("Insira o email"));
+		cadastro.setContato(JOptionPane.showInputDialog("Insira telefone para Contato"));
+		cadastro.setCargo("Cliente");
+		cadastro.setSenha(JOptionPane.showInputDialog("Crie uma senha"));
+		cadastro.setSaldos(JOptionPane.showInputDialog("Deposite um valor minimo de R$100,00"));
+		cadastro.setSalarios("0");
+		System.out.println(cadastro.getSaldo());
+		
+		String sql = " Insert into funcionario (id, nome , sobrenome, cpf, email, contato,salario,cpfsenha,cargo,poupanca,agencia)"
+				+ "values (default," + "'" + cadastro.getNome()+ "'" + ",'" + cadastro.getSobrenome()+ "'" + ",'" + cadastro.getCpf()+ "'" + ",'" + cadastro.getEmail()
+				+ "','" + cadastro.getContato() + "'" + ",'" +cadastro.getSalario()+ "'" + ",'" + cadastro.getCpf() + cadastro.getSenha() + "'" + ",'" + cadastro.getCargo() + "'" + ",'"+cadastro.getSaldo()+"'" + ",'" + agencia+"'" + ")";
 		int res = con.excutaSql(sql);
 		if (res > 0) {
 			JOptionPane.showMessageDialog(null, "Cadastrado com sucesso");
