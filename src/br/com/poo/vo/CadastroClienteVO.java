@@ -13,6 +13,8 @@ public class CadastroClienteVO {
 	private String senha ;
 	private String saldos;
 	private String salarios;
+	private String saldops;
+	private double saldop;
 	private double saldo;
 	private double salario;
 	
@@ -150,6 +152,27 @@ public class CadastroClienteVO {
 	public void setSalario(double salario) {
 		this.salario = salario;
 	}
+	public String getSaldops() {
+		return saldops;
+	}
+
+
+	public void setSaldops(String saldops) {
+		this.saldops = saldops;
+	}
+
+
+	public double getSaldop() {
+		return saldop=Double.parseDouble(saldops);
+	}
+
+
+	public void setSaldop(double saldop) {
+		this.saldop = saldop;
+	}
+
+
+	
 	
     
     
