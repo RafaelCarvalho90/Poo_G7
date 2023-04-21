@@ -2,16 +2,13 @@ package br.com.poo.interfac;
 
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-
 import java.awt.Color;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,8 +21,11 @@ import br.com.poo.pessoas.*;
 import br.com.poo.sistema.About;
 import br.com.poo.sistema.Etapa;
 import br.com.poo.sistema.SistemaInterno;
+import br.com.poo.vo.MenuClienteVO;
+import br.com.poo.vo.MenuGerenteVO;
 
 public class Interface extends JFrame {
+	MenuClienteVO novo = new MenuClienteVO();
 	/**
 	 * 
 	 */
@@ -66,6 +66,8 @@ public class Interface extends JFrame {
 					String conf = rs.getString("cpfsenha");
 					String nome = rs.getString("nome");
 					String cargo = rs.getString("cargo");
+					String agencia =rs.getString("agencia");
+					
 					if (cpfsenha.equals(conf)) {
 						JOptionPane.showMessageDialog(null, "              Bem-vindo!\n                   " + nome);
 						if (cargo.equalsIgnoreCase("caixa")) {
@@ -81,11 +83,20 @@ public class Interface extends JFrame {
 							break;
 						}
 						if (cargo.equalsIgnoreCase("Gerente")) {
-							MenuGerente(cpfsenha);
+//							Object[] escolha = { "Gerente", "Cliente" };
+//							Object opcao = JOptionPane.showInputDialog(null, "Escolha", "Deseja entrar como:",
+//									JOptionPane.INFORMATION_MESSAGE, null, escolha, escolha[1]);
+//							String selecao = (String) opcao;
+//							if (selecao.equalsIgnoreCase("cliente")) {
+//								MenuClienteVO.MenuClienteC(cpfsenha);(cpfsenha);
+//							} else {
+//								MenuGerente(cpfsenha);
+//							}
+							MenuGerenteVO.MenuGerente(cpfsenha,agencia);
 							break;
 						}
 						if (cargo.equalsIgnoreCase("Cliente")) {
-							MenuClienteP(cpfsenha);
+							MenuClienteVO.MenuClienteC(cpfsenha,agencia);
 							break;
 						}
 
@@ -204,256 +215,262 @@ public class Interface extends JFrame {
 		});
 	}
 
-	public static void MenuClienteC(String cpfsenha) {
-
-		GregorianCalendar gre = new GregorianCalendar();
-		Conexao con = new Conexao();
-		String sql = "select * from funcionario f where cpfsenha=" + "'" + cpfsenha + "'" + ";";
-		ResultSet rs = con.executaBusca(sql);
-		try {
-			while (rs.next()) {
-
-				String salario = rs.getString("salario");
-				String sobrenome = rs.getString("sobrenome");
-				String nome = rs.getString("nome");
-				String cpf = rs.getString("cpf");
-				String email = rs.getString("email");
-				String contato = rs.getString("contato");
-				String saldos = rs.getString("saldo");
-				double saldo = Double.parseDouble(saldos);
-
-				Conta cliente = new ContaCorrente();
-
-				int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,
-						nome + "\n" + gre.getTime() + "\n\n------Selecione uma operação------\n" + "| Opção 1 -Saque\n"
-								+ "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n"
-								+ "| Opção 5 -Extratos\n" + "| Digite 0 para sair",
-						"Menu Cliente", JOptionPane.INFORMATION_MESSAGE));
-
-				Conta novaconta = new Conta();
-				novaconta.depositarDinheiro(1000);
-
-				switch (operacao) {
-				case 1:
-					Object valors = JOptionPane.showInputDialog(null, "Qual valor gostaria de sacar?", "Sacar",
-							JOptionPane.INFORMATION_MESSAGE, new ImageIcon("res/saque.png"), null, null);
-					double valor = Double.parseDouble((String) valors);
-					System.out.println(novaconta.getSaldo());
-					novaconta.sacar(valor);
-					JOptionPane.showMessageDialog(null, "Seu novo saldo é: " + novaconta.getSaldo());
-					System.out.println(novaconta.getSaldo());
-					MenuClienteC(cpfsenha);
-					break;
-				case 2:
-					System.out.println(novaconta.getSaldo());
-					JOptionPane.showInternalMessageDialog(null, "Seu saldo é: " + saldo);
-					MenuClienteC(cpfsenha);
-
-					// novaconta.getSaldo();
-					// JOptionPane.showMessageDialog(null );
-					// MenuCliente(valor);
-					break;
-				case 3:
-					Object valord = JOptionPane.showInputDialog(null, "Qual valor gostaria de depositar?", "Deposito",
-							JOptionPane.INFORMATION_MESSAGE, new ImageIcon("res/qr.jpg"), null, null);
-					double valorf = Double.parseDouble((String) valord);
-					novaconta.depositarDinheiro(valorf);
-					System.out.println(novaconta.getSaldo());
-
-					MenuClienteC(cpfsenha);
-					break;
-				case 4:
-					Object valort = JOptionPane.showInputDialog(null, "Qual valor gostaria de transferir?", "Deposito",
-							JOptionPane.INFORMATION_MESSAGE, new ImageIcon("res/trans.png"), null, null);
-					double valortr = Double.parseDouble((String) valort);
-					novaconta.transferir(valortr, novaconta);
-					break;
-				case 5:
-//					Extratos;
-				case 0:
-					JOptionPane.showMessageDialog(null, "Obrigado por usar nossa agencia");
-					System.exit(0);
-				default:
-					JOptionPane.showMessageDialog(null, "Opção Invalida");
-					MenuClienteC(cpfsenha);
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void MenuClienteP(String cpfsenha) {
-
-		GregorianCalendar gre = new GregorianCalendar();
-		Conexao con = new Conexao();
-		String sql = "select * from funcionario f where cpfsenha=" + "'" + cpfsenha + "'" + ";";
-		ResultSet rs = con.executaBusca(sql);
-		try {
-			while (rs.next()) {
-
-				String salario = rs.getString("salario");
-				String sobrenome = rs.getString("sobrenome");
-				String nome = rs.getString("nome");
-				String cpf = rs.getString("cpf");
-				String email = rs.getString("email");
-				String contato = rs.getString("contato");
-				String saldos = rs.getString("saldo");
-				double saldo = Double.parseDouble(saldos);
-				String poupancas = rs.getString("poupanca");
-				double poupanca = Double.parseDouble(poupancas);
-
-				Cliente cli = new Cliente(nome, sobrenome, cpf, email, contato, saldo);
-
-				int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,
-						nome + "\n" + gre.getTime() + "\n\n------Selecione uma operação------\n"
-								+ "| Opção 1 -Resgate Poupança\n" + "| Opção 2 -Saldo Poupança\n"
-								+ "| Opção 3 -Depósito\n" + "| Opção 4 -Rendimentos\n"
-								+ "| Opção 5 -Simulação Rendimento\n" + "| Digite 0 para sair",
-						"Menu Cliente", JOptionPane.INFORMATION_MESSAGE));
-
-				Conta novaconta = new ContaPoupanca();
-				novaconta.depositarDinheiro(1000);
-
-				switch (operacao) {
-				case 1:
-					Object valort = JOptionPane.showInputDialog(null, "Qual valor gostaria de sacar?", "Saque",
-							JOptionPane.INFORMATION_MESSAGE, new ImageIcon("res/saque.png"), null, null);
-					double valorpou = Double.parseDouble((String) valort);
-					novaconta.transferir(valorpou, novaconta);
-//					double saque = Double.parseDouble(valor);
-//					// System.out.println(novaconta.getSaldo());
-//					novaconta.sacar(saque);
+//	public static void MenuClienteC(String cpfsenha) {
+//
+//		GregorianCalendar gre = new GregorianCalendar();
+//		Conexao con = new Conexao();
+//		String sql = "select * from funcionario f where cpfsenha=" + "'" + cpfsenha + "'" + ";";
+//		ResultSet rs = con.executaBusca(sql);
+//		try {
+//			while (rs.next()) {
+//
+//				String salario = rs.getString("salario");
+//				String sobrenome = rs.getString("sobrenome");
+//				String nome = rs.getString("nome");
+//				String cpf = rs.getString("cpf");
+//				String email = rs.getString("email");
+//				String contato = rs.getString("contato");
+//				String saldos = rs.getString("saldo");
+//				double saldo = Double.parseDouble(saldos);
+//				String cargo= rs.getString("cargo");
+//				
+//				if(cargo.equalsIgnoreCase("cliente")) {}
+//
+//				Conta cliente = new ContaCorrente();
+//
+//				int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,
+//						nome + "\n" + gre.getTime() + "\n\n------Selecione uma operação------\n" + "| Opção 1 -Saque\n"
+//								+ "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n" + "| Opção 4 -Transferir\n"
+//								+ "| Opção 5 -Extratos\n" + "| Digite 0 para sair",
+//						"Menu Cliente", JOptionPane.INFORMATION_MESSAGE));
+//
+//				Conta novaconta = new Conta();
+//				novaconta.depositarDinheiro(1000);
+//
+//				switch (operacao) {
+//				case 1:
+//					Object valors = JOptionPane.showInputDialog(null, "Qual valor gostaria de sacar?", "Sacar",
+//							JOptionPane.INFORMATION_MESSAGE, new ImageIcon("res/saque.png"), null, null);
+//					double valor = Double.parseDouble((String) valors);
+//					System.out.println(novaconta.getSaldo());
+//					novaconta.sacar(valor);
 //					JOptionPane.showMessageDialog(null, "Seu novo saldo é: " + novaconta.getSaldo());
-//					// System.out.println(novaconta.getSaldo());
-//					MenuCliente(valor);
-					// break;
-				case 2:
-					JOptionPane.showInternalMessageDialog(null, "Seu saldo é: " + poupanca);
-					novaconta.getSaldo();
-					MenuClienteC(cpfsenha);
-					// novaconta.getSaldo();
-					// JOptionPane.showMessageDialog(null );
-					// MenuCliente(valor);
-					break;
-				case 3:
-					Object depoupancaob = JOptionPane.showInputDialog(null, "Qual valor gostaria de depositar?",
-							"Deposito", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("res/qr.jpg"), null, null);
-					double deposito = Double.parseDouble((String) depoupancaob);
-					novaconta.depositarDinheiro(deposito);
-					System.out.println(novaconta.getSaldo());
-					JOptionPane.showMessageDialog(null, "Deposito de " + deposito + "feito com sucesso");
-					MenuClienteC(cpfsenha);
-					break;
-				case 4:
-//					Transferir;
-					break;
-				case 5:
+//					System.out.println(novaconta.getSaldo());
+//					MenuClienteC(cpfsenha);
+//					break;
+//				case 2:
+//					System.out.println(novaconta.getSaldo());
+//					JOptionPane.showInternalMessageDialog(null, "Seu saldo é: " + saldo);
+//					MenuClienteC(cpfsenha);
+//
+//					// novaconta.getSaldo();
+//					// JOptionPane.showMessageDialog(null );
+//					// MenuCliente(valor);
+//					break;
+//				case 3:
+//					Object valord = JOptionPane.showInputDialog(null, "Qual valor gostaria de depositar?", "Deposito",
+//							JOptionPane.INFORMATION_MESSAGE, new ImageIcon("res/qr.jpg"), null, null);
+//					double valorf = Double.parseDouble((String) valord);
+//					novaconta.depositarDinheiro(valorf);
+//					System.out.println(novaconta.getSaldo());
+//
+//					MenuClienteC(cpfsenha);
+//					break;
+//				case 4:
+//					Object valort = JOptionPane.showInputDialog(null, "Qual valor gostaria de transferir?", "Deposito",
+//							JOptionPane.INFORMATION_MESSAGE, new ImageIcon("res/trans.png"), null, null);
+//					double valortr = Double.parseDouble((String) valort);
+//					novaconta.transferir(valortr, novaconta);
+//					break;
+//				case 5:
+////					Extratos;
+//				case 7:MenuGerente(cpfsenha);
+//				case 0:
+//					JOptionPane.showMessageDialog(null, "Obrigado por usar nossa agencia");
+//					System.exit(0);
+//				default:
+//					JOptionPane.showMessageDialog(null, "Opção Invalida");
+//					MenuClienteC(cpfsenha);
+//				}
+//			}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
-					String valors = JOptionPane.showInputDialog(null, "Digite o valor inicial");
-					String dias = JOptionPane.showInputDialog(null, "Digite o dia ");
-					String meses = JOptionPane.showInputDialog(null, "Digite o mês ");
-					String anos = JOptionPane.showInputDialog(null, "Digite o ano ");
-					double valor = Double.parseDouble(valors);
-					int dia = Integer.parseInt(dias);
-					int mes = Integer.parseInt(meses);
-					int ano = Integer.parseInt(anos);
-					double taxa = 0.01;
-					Calendar datainicial = Calendar.getInstance();
-					datainicial.set(ano, mes, dia);
-					Calendar hoje = Calendar.getInstance();
-					int intervalo = (hoje.get(Calendar.YEAR) * 12 + hoje.get(Calendar.MONTH))
-							- (datainicial.get(Calendar.YEAR) * 12 + datainicial.get(Calendar.MONTH));
-					System.out.println(intervalo);
-					double intervaloD = intervalo;
-					double simulacao = valor * Math.pow((1 + taxa), intervaloD);
-					DecimalFormat df = new DecimalFormat("R$ #,###.00");
-					JOptionPane.showMessageDialog(null,
-							"O valor final no prazo de " + intervalo + " meses é de\n" + df.format(simulacao));
-					System.out.println();
-					MenuClienteP(cpfsenha);
+//	public static void MenuClienteP(String cpfsenha) {
+//
+//		GregorianCalendar gre = new GregorianCalendar();
+//		Conexao con = new Conexao();
+//		String sql = "select * from funcionario f where cpfsenha=" + "'" + cpfsenha + "'" + ";";
+//		ResultSet rs = con.executaBusca(sql);
+//		try {
+//			while (rs.next()) {
+//
+//				String salario = rs.getString("salario");
+//				String sobrenome = rs.getString("sobrenome");
+//				String nome = rs.getString("nome");
+//				String cpf = rs.getString("cpf");
+//				String email = rs.getString("email");
+//				String contato = rs.getString("contato");
+//				String saldos = rs.getString("saldo");
+//				double saldo = Double.parseDouble(saldos);
+//				String poupancas = rs.getString("poupanca");
+//				double poupanca = Double.parseDouble(poupancas);
+//
+//				Cliente cli = new Cliente(nome, sobrenome, cpf, email, contato, saldo);
+//
+//				int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,
+//						nome + "\n" + gre.getTime() + "\n\n------Selecione uma operação------\n"
+//								+ "| Opção 1 -Resgate Poupança\n" + "| Opção 2 -Saldo Poupança\n"
+//								+ "| Opção 3 -Depósito\n" + "| Opção 4 -Rendimentos\n"
+//								+ "| Opção 5 -Simulação Rendimento\n" + "| Digite 0 para sair",
+//						"Menu Cliente", JOptionPane.INFORMATION_MESSAGE));
+//
+//				Conta novaconta = new ContaPoupanca();
+//				novaconta.depositarDinheiro(1000);
+//
+//				switch (operacao) {
+//				case 1:
+//					Object valort = JOptionPane.showInputDialog(null, "Qual valor gostaria de sacar?", "Saque",
+//							JOptionPane.INFORMATION_MESSAGE, new ImageIcon("res/saque.png"), null, null);
+//					double valorpou = Double.parseDouble((String) valort);
+//					novaconta.transferir(valorpou, novaconta);
+////					double saque = Double.parseDouble(valor);
+////					// System.out.println(novaconta.getSaldo());
+////					novaconta.sacar(saque);
+////					JOptionPane.showMessageDialog(null, "Seu novo saldo é: " + novaconta.getSaldo());
+////					// System.out.println(novaconta.getSaldo());
+////					MenuCliente(valor);
+//					// break;
+//				case 2:
+//					JOptionPane.showInternalMessageDialog(null, "Seu saldo é: " + poupanca);
+//					novaconta.getSaldo();
+//					MenuClienteVO.MenuClienteC(cpfsenha);
+//					// novaconta.getSaldo();
+//					// JOptionPane.showMessageDialog(null );
+//					// MenuCliente(valor);
+//					break;
+//				case 3:
+//					Object depoupancaob = JOptionPane.showInputDialog(null, "Qual valor gostaria de depositar?",
+//							"Deposito", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("res/qr.jpg"), null, null);
+//					double deposito = Double.parseDouble((String) depoupancaob);
+//					novaconta.depositarDinheiro(deposito);
+//					System.out.println(novaconta.getSaldo());
+//					JOptionPane.showMessageDialog(null, "Deposito de " + deposito + "feito com sucesso");
+//					MenuClienteVO.MenuClienteC(cpfsenha);
+//					break;
+//				case 4:
+////					Transferir;
+//					break;
+//				case 5:
+//
+//					String valors = JOptionPane.showInputDialog(null, "Digite o valor inicial");
+//					String dias = JOptionPane.showInputDialog(null, "Digite o dia ");
+//					String meses = JOptionPane.showInputDialog(null, "Digite o mês ");
+//					String anos = JOptionPane.showInputDialog(null, "Digite o ano ");
+//					double valor = Double.parseDouble(valors);
+//					int dia = Integer.parseInt(dias);
+//					int mes = Integer.parseInt(meses);
+//					int ano = Integer.parseInt(anos);
+//					double taxa = 0.01;
+//					Calendar datainicial = Calendar.getInstance();
+//					datainicial.set(ano, mes, dia);
+//					Calendar hoje = Calendar.getInstance();
+//					int intervalo = (hoje.get(Calendar.YEAR) * 12 + hoje.get(Calendar.MONTH))
+//							- (datainicial.get(Calendar.YEAR) * 12 + datainicial.get(Calendar.MONTH));
+//					System.out.println(intervalo);
+//					double intervaloD = intervalo;
+//					double simulacao = valor * Math.pow((1 + taxa), intervaloD);
+//					DecimalFormat df = new DecimalFormat("R$ #,###.00");
+//					JOptionPane.showMessageDialog(null,
+//							"O valor final no prazo de " + intervalo + " meses é de\n" + df.format(simulacao));
+//					System.out.println();
+//					MenuClienteP(cpfsenha);
+//
+//				case 0:
+//					JOptionPane.showMessageDialog(null, "Obrigado por usar nossa agencia");
+//					System.exit(0);
+//				default:
+//					JOptionPane.showMessageDialog(null, "Opção Invalida");
+//					MenuClienteVO.MenuClienteC(cpfsenha);
+//				}
+//			}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
-				case 0:
-					JOptionPane.showMessageDialog(null, "Obrigado por usar nossa agencia");
-					System.exit(0);
-				default:
-					JOptionPane.showMessageDialog(null, "Opção Invalida");
-					MenuClienteC(cpfsenha);
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void MenuGerente(String cpfsenha) {
-		Object[] escolha = { "Gerente", "Cliente" };
-		Object opcao = JOptionPane.showInputDialog(null, "Escolha", "Deseja entrar como:",
-				JOptionPane.INFORMATION_MESSAGE, null, escolha, escolha[1]);
-		String selecao = (String) opcao;
-		if (selecao.equalsIgnoreCase("cliente")) {
-			MenuClienteC(cpfsenha);
-		} else {
-
-			GregorianCalendar gre = new GregorianCalendar();
-			Conexao con = new Conexao();
-			Gerente ger = new Gerente();
-			String sql = "select * from funcionario f where cpfsenha=" + "'" + cpfsenha + "'" + ";";
-			ResultSet rs = con.executaBusca(sql);
-			try {
-				while (rs.next()) {
-
-					String salario = rs.getString("salario");
-					String nome = rs.getString("nome");
-					String saldo = rs.getString("saldo");
-
-					int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,
-							nome + "\n" + gre.getTime() + "\n\n------Selecione uma operação------\n"
-									+ "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n"
-									+ "| Opção 4 -Transferir\n" + "| Opção 5 -Extratos\n"
-									+ "| Opção 6 -Cadastrar Cliente\n" + "| Opção 7 -Gerar Relatório Caixa\n"
-									+ "| Digite 0 para sair",
-							"Menu Gerente ", JOptionPane.INFORMATION_MESSAGE));
-					switch (operacao) {
-					case 1:
-//					saque
-						break;
-
-					case 2:
-						JOptionPane.showInternalMessageDialog(null, "Seu saldo é: " + saldo);
-						MenuGerente(cpfsenha);
-
-						break;
-					case 3:
-						JOptionPane.showInputDialog(null, "Qual valor gostaria de depositar?", "Deposito",
-								JOptionPane.INFORMATION_MESSAGE, new ImageIcon("res/qr.jpg"), null, null);
-						MenuGerente(cpfsenha);
-						break;
-					case 4:
-//					Transferir
-						break;
-
-//				case 5:Extratos
-
-					case 6:
-						ger.cadastroCliente();
-						break;
-//				case 7: Gerar Relatorio Caixa
-
-					case 0:
-						JOptionPane.showMessageDialog(null, "Obrigado por usar nossa agencia");
-						System.exit(0);
-					}
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
+//	public static void MenuGerente(String cpfsenha) {
+//		Object[] escolha = { "Gerente", "Cliente" };
+//		Object opcao = JOptionPane.showInputDialog(null, "Escolha", "Deseja entrar como:",
+//				JOptionPane.INFORMATION_MESSAGE, null, escolha, escolha[1]);
+//		String selecao = (String) opcao;
+//		if (selecao.equalsIgnoreCase("cliente")) {
+//			MenuClienteVO.MenuCliente(cpfsenha);
+//		} else {
+//
+//			GregorianCalendar gre = new GregorianCalendar();
+//			Conexao con = new Conexao();
+//			Gerente ger = new Gerente();
+//			String sql = "select * from funcionario f where cpfsenha=" + "'" + cpfsenha + "'" + ";";
+//			ResultSet rs = con.executaBusca(sql);
+//			try {
+//				while (rs.next()) {
+//
+//					String salario = rs.getString("salario");
+//					String nome = rs.getString("nome");
+//					String saldo = rs.getString("saldo");
+//
+//					int operacao = Integer.parseInt(JOptionPane.showInputDialog(null,
+//							nome + "\n" + gre.getTime() + "\n\n------Selecione uma operação------\n"
+//									+ "| Opção 1 -Saque\n" + "| Opção 2 -Saldo\n" + "| Opção 3 -Deposito\n"
+//									+ "| Opção 4 -Transferir\n" + "| Opção 5 -Extratos\n"
+//									+ "| Opção 6 -Cadastrar Cliente\n" + "| Opção 7 -Mudar Acesso\n"
+//									+ "| Digite 0 para sair",
+//							"Menu Gerente ", JOptionPane.INFORMATION_MESSAGE));
+//					switch (operacao) {
+//					case 1:
+////					saque
+//						break;
+//
+//					case 2:
+//						JOptionPane.showInternalMessageDialog(null, "Seu saldo é: " + saldo);
+//						MenuGerente(cpfsenha);
+//
+//						break;
+//					case 3:
+//						JOptionPane.showInputDialog(null, "Qual valor gostaria de depositar?", "Deposito",
+//								JOptionPane.INFORMATION_MESSAGE, new ImageIcon("res/qr.jpg"), null, null);
+//						MenuGerente(cpfsenha);
+//						break;
+//					case 4:
+////					Transferir
+//						break;
+//
+////				case 5:Extratos
+//
+//					case 6:
+//						ger.cadastroCliente(cpfsenha);
+//						break;
+//					case 7 :MenuGerente(cpfsenha);
+//						break;
+////				case 7: Gerar Relatorio Caixa
+//
+//					case 0:
+//						JOptionPane.showMessageDialog(null, "Obrigado por usar nossa agencia");
+//						System.exit(0);
+//					}
+//				}
+//
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//
+//	}
 
 	public static void MenuDiretor(String cpfsenha) {
 		Object[] escolha = { "Diretor", "Cliente" };
@@ -463,7 +480,7 @@ public class Interface extends JFrame {
 		System.out.println(selecao);
 		System.out.println("opção=" + opcao);
 		if (selecao.equalsIgnoreCase("cliente")) {
-			MenuClienteC(cpfsenha);
+			MenuClienteVO.MenuCliente(cpfsenha,selecao);
 		} else {
 			GregorianCalendar gre = new GregorianCalendar();
 			Conexao con = new Conexao();
@@ -523,7 +540,7 @@ public class Interface extends JFrame {
 				JOptionPane.INFORMATION_MESSAGE, null, escolha, escolha[1]);
 		String selecao = (String) opcao;
 		if (selecao.equalsIgnoreCase("cliente")) {
-			MenuClienteC(cpfsenha);
+			MenuClienteVO.MenuCliente(cpfsenha,selecao);
 		} else {
 			GregorianCalendar gre = new GregorianCalendar();
 			Conexao con = new Conexao();
@@ -577,7 +594,7 @@ public class Interface extends JFrame {
 				JOptionPane.INFORMATION_MESSAGE, null, escolha, escolha[1]);
 		String selecao = (String) opcao;
 		if (selecao.equalsIgnoreCase("cliente")) {
-			MenuClienteC(cpfsenha);
+			MenuClienteVO.MenuCliente(cpfsenha,selecao);
 		} else {
 			GregorianCalendar gre = new GregorianCalendar();
 			Conexao con = new Conexao();

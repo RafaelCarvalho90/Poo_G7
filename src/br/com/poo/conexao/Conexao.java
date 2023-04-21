@@ -17,6 +17,7 @@ public class Conexao {
 	 senha="123456";
 	 
 	 try {
+			
 		 Class.forName("org.postgresql.Driver");
 		 con = DriverManager.getConnection(url,usuario,senha);
 		 System.out.println("Conexão Realizada com sucesso!!!");
@@ -49,4 +50,19 @@ public class Conexao {
 	}
 	 
  }
+
+public ResultSet Count(String sql){
+	
+
+	 try {
+            Statement comando = con.createStatement();
+            ResultSet rs = comando.executeQuery(sql);            
+            con.close();
+			return rs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+	return null;
+}
+
 }
