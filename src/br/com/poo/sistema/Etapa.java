@@ -8,7 +8,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Etapa extends JPanel{
-	
 	/**
 	 * 
 	 */
@@ -18,7 +17,7 @@ public class Etapa extends JPanel{
 	
 	public Etapa() {
 		
-		ImageIcon referencia = new ImageIcon("res\\background.jpg");
+		ImageIcon referencia = new ImageIcon("res\\splash.gif");
 		fundo = referencia.getImage();
 	}
 	

@@ -1,4 +1,5 @@
-import java.sql.ResultSet;
+package br.com.poo.conexao;
+
 import java.util.Scanner;
 public class Principal {
 

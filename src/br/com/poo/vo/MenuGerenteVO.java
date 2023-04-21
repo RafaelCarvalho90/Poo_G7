@@ -24,7 +24,7 @@ public class MenuGerenteVO {
 			Conexao con = new Conexao();
 			Gerente ger = new Gerente();
 			String sql = "select * from funcionario f where cpfsenha=" + "'" + cpfsenha + "'"
-					+ "union select * from funcionario where agencia=" + "'" + agencia + "'" + ";";
+					+ "and agencia=" + "'" + agencia + "'" + ";";
 			ResultSet rs = con.executaBusca(sql);
 			try {
 				while (rs.next()) {
@@ -40,6 +40,7 @@ public class MenuGerenteVO {
 					switch (operacao) {
 					case 1:
 						Totalagencia(cpfsenha, agencia);
+						MenuGerente(cpfsenha, agencia);
 
 						break;
 
@@ -84,36 +85,27 @@ public class MenuGerenteVO {
 
 		Conexao con = new Conexao();
 
-		String sql = "select count(agencia) from funcionario f where cpfsenha=" + "'" + cpfsenha + "'" + "or agencia="
-				+ "'" + agencia + "'" + ";";
+		String sql = "select count(agencia) as count from funcionario f where cpfsenha=" + "'" + cpfsenha + "'"
+				+ "or agencia=" + "'" + agencia + "'" + ";";
 
 		ResultSet rs = con.Count(sql);
 		try {
+
 			while (rs.next()) {
 
-				int count = rs.getInt(1);
-				System.out.println("O número de registros na tabela com a agencia " + agencia + " é: " + count);
+				int count = rs.getInt("count");
+				JOptionPane.showMessageDialog(null,"O número de contas na agência " + agencia + " é: " + count);
+				System.out.println("esse aqui tem historia"+count);
 			}
+
+			//
+//
+//				JOptionPane.showMessageDialog(null, "O número de registros na tabela com a agencia " + agencia + " é: " + count);
+//
+//			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 }
-
-//		Conexao con = new Conexao();
-//		String sql = "select count(" + agencia + ") from funcionario f where cpfsenha=" + "'" + cpfsenha + "'"
-//				+ "or agencia=" + "'" + agencia + "'" + ";";
-//		ResultSet rs = con.executaBusca(sql);
-//		try {
-//		
-//			while (rs.next()) {
-//
-//			System.out.println("Sql: "+sql);
-//			System.out.println("RS :"+rs);
-//
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//
-//		}
