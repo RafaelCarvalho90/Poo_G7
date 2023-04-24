@@ -3,25 +3,37 @@ package br.com.poo.pessoas;
 import java.util.Scanner;
 import java.text.DecimalFormat;
 
-public class Funcionarios 
+public class Pessoa 
 {
-	protected String nome;
-	protected String sobrenome;
-	protected String cpf;
-	protected String email;
-	protected String contato;
-	protected String idFuncionario;
-	protected double salario;
-	protected static int numFuncionarios = 0;
-	static boolean verifica_nome;
+	private String nome;
+	private String sobrenome;
+	private String cpf;
+	private String email;
+	private String contato;
 	
 	
+	
+	
+	
+	public Pessoa(String nome,String sobrenome,String cpf,String email,String contato){
+		
+		this.nome=nome;
+		this.sobrenome=sobrenome;
+		this.cpf=cpf;
+		this.email=email;
+		this.contato=contato;
+		
+	}
+	public Pessoa() {
+		
+		
+	}
 	
 	public String getNome() 
 	{				
 		  
 	    
-		return null;						
+		return nome;						
 	}
 	
 	public void setNome(String nome) 
@@ -83,25 +95,11 @@ public class Funcionarios
 	{
 		this.contato = contato;
 	}
-	
-	public String getIdFuncionario() 
-	{
-		return idFuncionario;
+
+	public static Pessoa[] getPessoa() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
-	public void setIdFuncionario(String idFuncionario) 
-	{
-		this.idFuncionario = idFuncionario;
-	}
-	
-	public static int getNumFuncionarios() 
-	{
-		return numFuncionarios;
-	}
-	
-	public static void setNumFuncionarios(int numFuncionarios) 
-	{
-		Funcionarios.numFuncionarios = numFuncionarios;
-	}
 		
 }
