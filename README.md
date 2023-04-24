@@ -49,3 +49,6 @@ Para o nosso sistema ser executado, é necessário atender os seguintes pré-req
 
 ## Contribuidores
 - @joaovictor190
+- @RafaelCarvalho90
+- @Gabrielsn17
+- @RafaelVieiraCamara
