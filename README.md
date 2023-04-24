@@ -22,7 +22,7 @@ caso seja o primeiro acesso do usuário no sistema, será possivel se cadastrar 
 ## Acesso/Requisitos da Aplicação
 
 Ao iniciar seu acesso, no nosso menu você irá notar uma tela com varias apções de acordo com oque você deseja acessar! 
-caso seja caixa, funcionário, gerente ou presidente cada um desses terá seu próprio menu no banco. Caso seja cliente 
+caso seja caixa, funcionário, diretor, gerente ou presidente cada um desses terá seu próprio menu no banco. Caso seja cliente 
 terá também seu próprio menu com outras opções ou devera se cadastrar para acessar.
 
 ## Status do Projeto
@@ -47,3 +47,5 @@ Para o nosso sistema ser executado, é necessário atender os seguintes pré-req
 
 - Ter instalado na máquina o [Eclipse] (https://www.eclipse.org/downloads/), ferramenta utilizada para executar o programa e editar os códigos.
 
+## Contribuidores
+- @joaovictor190
