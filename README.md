@@ -19,9 +19,9 @@ O nosso projeto tem como objetivo desenvolver um sistema de um banco, chamado Ea
 
 caso seja o primeiro acesso do usuário no sistema, será possivel se cadastrar para fazer um novo login, caso já esteja cadastrado no banco só acessar com suas credênciais.
 
-##Acesso/Requisitos da Aplicação
+## Acesso/Requisitos da Aplicação
 
-Ao iniciar seu acesso no nosso menu, você irá notar uma tela com varias apções de acordo com oque você deseja acessar! 
+Ao iniciar seu acesso, no nosso menu você irá notar uma tela com varias apções de acordo com oque você deseja acessar! 
 caso seja caixa, funcionário, gerente ou presidente cada um desses terá seu próprio menu no banco. Caso seja cliente 
 terá também seu próprio menu com outras opções ou devera se cadastrar para acessar.
 
