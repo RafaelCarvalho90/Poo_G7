@@ -31,7 +31,7 @@ Tarefas:
 - [x] (Concluído) Tela de inicialização do Banco
 - [x] (Concluído) Tela de menu
 - [x] (Concluído) Tela de login
-- [x] (Concluído) tela de cadastro
+- [x] (Concluído) Tela de cadastro
 - [x] (Concluído) Preencher o README.md
 - [x] (Concluído) Versionamento no Git e Repositório no GitHub
 - [x] (Concluído) Cargos e Funcionários
