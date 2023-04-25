@@ -52,3 +52,4 @@ Para o nosso sistema ser executado, é necessário atender os seguintes pré-req
 - @RafaelCarvalho90
 - @Gabrielsn17
 - @RafaelVieiraCamara
+- @BielG88
